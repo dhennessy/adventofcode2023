@@ -48,13 +48,6 @@ struct Grid {
         if x+length < width {
             coords.append((x+length, y))
         }
-
-        for (x, y) in coords {
-            let i = y * width + x
-            if i < 0 || i > grid.count {
-                print("Bad coords: \((x, y))")
-            }
-        }
         return coords
     }
 }

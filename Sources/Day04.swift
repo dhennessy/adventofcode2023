@@ -1,18 +1,15 @@
 import Algorithms
 
 struct Day04: AdventDay {
-    let data: String    
     let entities: [[Int]]
     
     init(data: String) {
-        self.data = data
         entities = data.split(separator: "\n").map {
             let scores = $0.split(separator: ":").last!.split(separator: "|")
             let winning = scores.first!.split(separator: " ").compactMap { Int($0) }
             let player = scores.last!.split(separator: " ").compactMap { Int($0) }
             return player.filter({ winning.contains($0)})
         }
-
     }
     
     func part1() -> Any {

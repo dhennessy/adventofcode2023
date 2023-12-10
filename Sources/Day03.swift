@@ -57,29 +57,7 @@ struct Day03: AdventDay {
     }
 }
 
-struct Grid {
-    var grid: [String]
-    let width: Int
-    let height: Int
-    
-    init(_ s: String) {
-        let lines = s.split(separator:"\n").map { String($0) }
-        height = lines.count
-        width = lines.first?.count ?? 0
-        grid = []
-        for line in lines {
-            grid.append(contentsOf: line.map({String($0)}))
-        }
-    }
-    
-    subscript(col: Int, row: Int) -> String {
-        let i = row * width + col
-        if i < 0 || i >= grid.count {
-            print("Bad coords: \((col, row))")
-        }
-        return grid[row*width+col]
-    }
-    
+extension Grid {
     /// Return the location of all locations surrounding a span
     func boundary(x: Int, y: Int, length: Int) -> [(Int, Int)] {
         var coords: [(Int, Int)] = []

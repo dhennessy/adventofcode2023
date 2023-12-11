@@ -1,9 +1,11 @@
 import Foundation
 
+typealias Point = (x:Int, y:Int)
+
 struct Grid: CustomDebugStringConvertible {
     var grid: [String]
-    let width: Int
-    let height: Int
+    var width: Int
+    var height: Int
     
     init(_ s: String) {
         let lines = s.split(separator:"\n").map { String($0) }
@@ -40,8 +42,21 @@ struct Grid: CustomDebugStringConvertible {
         }
     }
     
+    mutating func insertColumn(repeating: String, at x: Int) {
+        width += 1
+        for y in 0..<height {
+            grid.insert(repeating, at: y*width+x)
+        }
+    }
+    
+    mutating func insertRow(repeating: String, at y: Int) {
+        let row = [String](repeating: repeating, count: width)
+        grid.insert(contentsOf: row, at: y*width)
+        height += 1
+    }
+    
     /// Return the location of a string as (x, y)
-    func find(_ s: String) -> (Int, Int)? {
+    func find(_ s: String) -> Point? {
         for x in 0..<width {
             for y in 0..<height {
                 if self[x, y] == s {
@@ -51,5 +66,19 @@ struct Grid: CustomDebugStringConvertible {
         }
         return nil
     }
+    
+    /// Return all locations of a string as an array of (x, y)
+    func findAll(_ s: String) -> [Point] {
+        var locs: [(Int, Int)] = []
+        for y in 0..<height {
+            for x in 0..<width {
+                if self[x, y] == s {
+                    locs.append((x, y))
+                }
+            }
+        }
+        return locs
+    }
+
 }
 
